@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class ParkTest {
@@ -14,21 +15,33 @@ public class ParkTest {
         ParkSpace parkSpace = new ParkSpace(10);
         Car car = new Car(1, "Terry");
         //when
-        String result = parkSpace.addCar(car);
+        String result = null;
+        try {
+            result = parkSpace.addCar(car);
+        } catch (Exception e) {
+            fail("should park successfully");
+            e.printStackTrace();
+        }
+
         //then
         assertThat(result, is("Terry,Welcome to spark!"));
 
     }
 
     @Test
-    public void should_return_sorry_when_remain_space_less_than_zero_and_add_a_car() {
+    public void should_return_sorry_when_remain_space_less_than_zero_and_add_a_car()  {
         //given
-        ParkSpace parkSpace = new ParkSpace(1);
+        ParkSpace parkSpace = new ParkSpace(0);
         Car carId_1 = new Car(1, "Terry");
-        Car carId_2 = new Car(2, "Carol");
         //when
-        parkSpace.addCar(carId_1);
-        String result = parkSpace.addCar(carId_2);
+        String result = null;
+        try {
+            result = parkSpace.addCar(carId_1);
+
+        } catch (Exception e) {
+            fail("should park successfully");
+            e.printStackTrace();
+        }
         //then
         assertThat(result, is("Sorry,There is no vacant parking space here!"));
 
@@ -38,7 +51,12 @@ public class ParkTest {
         //given
         ParkSpace parkSpace = new ParkSpace(10);
         Car car = new Car(1, "Terry");
-        parkSpace.addCar(car);
+        try {
+            parkSpace.addCar(car);
+        } catch (Exception e) {
+            fail("should park successfully");
+            e.printStackTrace();
+        }
         //when
         parkSpace.pickUpCar(car);
         int result = parkSpace.getNumofVacancy();
