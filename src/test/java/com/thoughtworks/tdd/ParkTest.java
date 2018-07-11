@@ -34,4 +34,17 @@ public class ParkTest {
         assertThat(result, is("Sorry,There is no vacant parking space here!"));
 
     }
+    @Test
+    public  void should_return_full_sub_when_pick_up_the_car(){
+        //given
+        ParkSpace parkSpace = new ParkSpace(10);
+        Car car = new Car(1, "Terry");
+        parkSpace.addCar(car);
+        //when
+        parkSpace.pickUpCar(car);
+        int result = parkSpace.getNumofVacancy();
+        //then
+        assertThat(result, is(10));
+    }
+
 }

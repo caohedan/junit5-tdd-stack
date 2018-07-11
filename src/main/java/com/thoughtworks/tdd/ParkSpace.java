@@ -11,11 +11,17 @@ public class ParkSpace {
 
     public String addCar(Car car) {
         if ((this.total - this.full) > 0) {
-            this.total--;
             this.full++;
             return car.displayInfo(true);
         }
-            return car.displayInfo(false);
+        return car.displayInfo(false);
+    }
 
+    public int getNumofVacancy() {
+        return total - full;
+    }
+
+    public void pickUpCar(Car car) {
+        this.full--;
     }
 }
