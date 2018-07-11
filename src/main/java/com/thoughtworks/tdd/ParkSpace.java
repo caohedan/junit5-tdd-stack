@@ -9,7 +9,9 @@ public class ParkSpace {
         this.full = 0;
     }
 
-    public String addCar(Car car) {
+    public String addCar(Car car) throws Exception {
+        if(full>total)
+            throw  new Exception("停车位不够，异常操作!");
         if ((this.total - this.full) > 0) {
             this.full++;
             return car.displayInfo(true);
