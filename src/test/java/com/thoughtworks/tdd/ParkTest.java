@@ -16,7 +16,6 @@ public class ParkTest {
         //when
         String result = parkSpace.addCar(car);
         //then
-        //then
         assertThat(result, is("Terry,Welcome to spark!"));
 
     }
