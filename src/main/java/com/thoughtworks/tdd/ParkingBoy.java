@@ -1,4 +1,4 @@
-package com.thoughtworks.tdd.requirement2;
+package com.thoughtworks.tdd;
 
 
 import java.util.ArrayList;

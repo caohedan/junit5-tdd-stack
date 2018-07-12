@@ -1,4 +1,4 @@
-package com.thoughtworks.tdd.requirement2;
+package com.thoughtworks.tdd;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class ParkingLot{
         {
             throw new ParkingLotFullException();
         }
-        Receipt receipt = new  Receipt();
+        Receipt receipt = new Receipt();
         receiptsMap.put(receipt,car);
         return receipt;
     }

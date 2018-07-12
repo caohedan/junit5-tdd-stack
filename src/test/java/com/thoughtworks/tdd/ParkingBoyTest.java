@@ -1,5 +1,6 @@
-package com.thoughtworks.tdd.requirement2;
+package com.thoughtworks.tdd;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class ParkingBoyTest {
         Receipt receipt = parkingBoy.park(theCar);
         Receipt anotherReceipt = parkingBoy.park(new Car());
         //then
-        assertThat(parkingBoy.unPark(anotherReceipt), not(theCar));
+        assertThat(parkingBoy.unPark(anotherReceipt), CoreMatchers.not(theCar));
     }
 
 
