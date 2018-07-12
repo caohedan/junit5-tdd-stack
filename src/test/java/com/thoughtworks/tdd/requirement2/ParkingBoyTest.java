@@ -82,7 +82,7 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy();
         parkingBoy.addParkingLot(new ParkingLot(0));
 
-        assertThat(parkingBoy.isParkingLotFull(), is(true));
+        assertThat(parkingBoy.isParkingLotsFull(), is(true));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy();
         parkingBoy.addParkingLot(new ParkingLot(1));
 
-        assertThat(parkingBoy.isParkingLotFull(), is(false));
+        assertThat(parkingBoy.isParkingLotsFull(), is(false));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class ParkingBoyTest {
         Car theCar = new Car();
         Receipt receipt = parkingBoy.park(theCar);
         parkingBoy.unPark(receipt);
-        assertThat(parkingBoy.isParkingLotFull(), is(false));
+        assertThat(parkingBoy.isParkingLotsFull(), is(false));
     }
 
     @Test

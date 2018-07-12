@@ -18,8 +18,8 @@ public class ParkingBoy {
         parkingLots.stream().forEach(parkingLot -> this.parkingLots.add(parkingLot));
     }
     public Receipt park(Car car) {
-        System.out.print(isParkingLotFull());
-        if (isParkingLotFull()) {
+        System.out.print(isParkingLotsFull());
+        if (isParkingLotsFull()) {
             throw new ParkingLotFullException();
         }
         Receipt receipt = null;
@@ -32,7 +32,7 @@ public class ParkingBoy {
         return receipt;
     }
 
-    public boolean isParkingLotFull() {
+    public boolean isParkingLotsFull() {
         for (ParkingLot parkingLot : this.parkingLots) {
             if (!parkingLot.isFull()) {
                 return false;
