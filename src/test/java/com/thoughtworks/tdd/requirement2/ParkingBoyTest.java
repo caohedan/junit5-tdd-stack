@@ -2,6 +2,9 @@ package com.thoughtworks.tdd.requirement2;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,11 +26,13 @@ public class ParkingBoyTest {
     }
     @Test
     public void should_park_successfully_given_parking_lot_is_two_and_one_is_full_and_another_is_not_full() {
-        ParkingBoy parkingLots = new ParkingBoy();
-        parkingLots.addParkingLot(new ParkingLot(0));
-        parkingLots.addParkingLot(new ParkingLot(1));
+        ParkingBoy parkingBoy = new ParkingBoy();
+        List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+        parkingLots.add(new ParkingLot(0));
+        parkingLots.add(new ParkingLot(1));
+        parkingBoy.addParkingLot(parkingLots);
         try {
-            parkingLots.park(new Car());
+            parkingBoy.park(new Car());
         } catch (ParkingLotFullException exception) {
             fail("should park successfully");
         }

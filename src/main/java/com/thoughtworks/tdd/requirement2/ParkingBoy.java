@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingBoy {
-    private  List<ParkingLot>  parkingLots;
+    private List<ParkingLot> parkingLots;
 
     public ParkingBoy() {
         this.parkingLots = new ArrayList<ParkingLot>();
@@ -14,28 +14,27 @@ public class ParkingBoy {
     public void addParkingLot(ParkingLot parkingLot) {
         this.parkingLots.add(parkingLot);
     }
-
+    public void addParkingLot(List<ParkingLot> parkingLots) {
+        parkingLots.stream().forEach(parkingLot -> this.parkingLots.add(parkingLot));
+    }
     public Receipt park(Car car) {
         System.out.print(isParkingLotFull());
-        if(isParkingLotFull())
-        {
+        if (isParkingLotFull()) {
             throw new ParkingLotFullException();
         }
-        Receipt receipt = null ;
-        for(ParkingLot parkingLot:this.parkingLots)
-        {
+        Receipt receipt = null;
+        for (ParkingLot parkingLot : this.parkingLots) {
             receipt = parkingLot.park(car);
-            if(receipt != null)
+            if (receipt != null)
                 break;
         }
 
         return receipt;
     }
-    public boolean isParkingLotFull(){
-        for(ParkingLot parkingLot:this.parkingLots)
-        {
-            if(!parkingLot.isFull())
-            {
+
+    public boolean isParkingLotFull() {
+        for (ParkingLot parkingLot : this.parkingLots) {
+            if (!parkingLot.isFull()) {
                 return false;
             }
         }
