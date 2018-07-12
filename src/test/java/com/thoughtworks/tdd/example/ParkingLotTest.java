@@ -6,9 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-
-
 public class ParkingLotTest {
 
     @Test
@@ -29,7 +26,7 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(0);
 
         try {
-            parkingLot.park(new Car());
+             parkingLot.park(new Car());
             fail("should park successfully");
         } catch (ParkingLotFullException exception) {
 

@@ -6,10 +6,10 @@ import java.util.List;
 
 public class ParkingLot {
     private int size ;
-    private HashMap<Car,Receipt> receiptsMap;
+    private HashMap<Receipt,Car> receiptsMap;
     public ParkingLot(int size) {
         this.size = size ;
-        receiptsMap = new HashMap<Car,Receipt>();
+        receiptsMap = new HashMap<Receipt,Car>();
     }
 
     public Receipt park(Car car) {
@@ -17,14 +17,15 @@ public class ParkingLot {
       {
           throw new ParkingLotFullException();
       }
-        Receipt receipt = new  Receipt(car,this);
-        receiptsMap.put(car,receipt);
+        Receipt receipt = new  Receipt();
+        receiptsMap.put(receipt,car);
       return receipt;
     }
 
     public Car unPark(Receipt receipt) {
-        receiptsMap.remove(receipt.getCar(),receipt);
-       return receipt.getCar();
+        Car car = receiptsMap.get(receipt);
+        receiptsMap.remove(receipt);
+       return car;
     }
 
     public boolean isFull() {

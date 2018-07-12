@@ -2,28 +2,35 @@ package com.thoughtworks.tdd.requirement2;
 
 import java.util.HashMap;
 
-public class ParkingLot {
-    private int size;
-    private HashMap<Car, Receipt> receiptsMap;
 
+public class ParkingLot{
+    private int size ;
+    private HashMap<Receipt,Car> receiptsMap;
     public ParkingLot(int size) {
-        this.size = size;
-        receiptsMap = new HashMap<Car, Receipt>();
+        this.size = size ;
+        receiptsMap = new HashMap<Receipt,Car>();
     }
 
     public Receipt park(Car car) {
-        if (isFull()) {
-
-            return null;
+        if(isFull())
+        {
+            throw new ParkingLotFullException();
         }
-        Receipt receipt = new Receipt(car, this);
-        receiptsMap.put(car, receipt);
+        Receipt receipt = new  Receipt();
+        receiptsMap.put(receipt,car);
         return receipt;
     }
 
     public Car unPark(Receipt receipt) {
-        receiptsMap.remove(receipt.getCar(), receipt);
-        return receipt.getCar();
+        Car car = receiptsMap.get(receipt);
+        receiptsMap.remove(receipt);
+        return car;
+    }
+    public boolean isFindReceipt(Receipt receipt)
+    {
+        if(this.receiptsMap.get(receipt) != null)
+            return  true;
+        return false;
     }
 
     public boolean isFull() {
