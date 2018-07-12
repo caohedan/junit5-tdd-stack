@@ -52,6 +52,7 @@ public class ParkingBoy {
            if(parkingLot.isFindReceipt(receipt))
            theParkingLot = parkingLot;
        }
+       System.out.print(theParkingLot);
         return theParkingLot.unPark(receipt);
     }
 }

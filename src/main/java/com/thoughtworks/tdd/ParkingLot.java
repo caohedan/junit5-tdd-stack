@@ -36,4 +36,5 @@ public class ParkingLot{
     public boolean isFull() {
         return this.size == receiptsMap.size();
     }
+
 }
