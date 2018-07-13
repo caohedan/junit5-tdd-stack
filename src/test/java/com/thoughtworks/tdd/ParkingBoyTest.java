@@ -1,6 +1,11 @@
 package com.thoughtworks.tdd;
 
-import org.hamcrest.CoreMatchers;
+import com.thoughtworks.tdd.core.Car;
+import com.thoughtworks.tdd.core.ParkingBoy;
+import com.thoughtworks.tdd.core.ParkingLot;
+import com.thoughtworks.tdd.core.Receipt;
+import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
+import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -8,12 +13,8 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class ParkingBoyTest {
@@ -23,7 +24,7 @@ public class ParkingBoyTest {
         //given
         ParkingBoy parkingBoy = new ParkingBoy();
         ParkingLot parkingLot = mock(ParkingLot.class);
-        Car car = new Car();
+        Car car = new Car("湘L-554466");
         parkingBoy.addParkingLot(parkingLot);
         when(parkingLot.isFull()).thenReturn(false);
         //when
@@ -47,7 +48,7 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot_1);
         parkingLots.add(parkingLot_2);
         parkingBoy.addParkingLot(parkingLots);
-        Car car = new Car();
+        Car car = new Car("湘L-554466");
         when(parkingLot_1.isFull()).thenReturn(true);
         when(parkingLot_2.isFull()).thenReturn(false);
         //when
@@ -67,7 +68,7 @@ public class ParkingBoyTest {
 
         try {
             //when
-            parkingBoy.park(new Car());
+            parkingBoy.park(new Car("湘L-554466"));
             //then
             fail("should park successfully");
         } catch (ParkingLotFullException exception) {
@@ -90,7 +91,7 @@ public class ParkingBoyTest {
         when(parkingLot_2.isFull()).thenReturn(true);
         try {
             //when
-            parkingBoy.park(new Car());
+            parkingBoy.park(new Car("湘L-554466"));
             //then
             fail("should park successfully");
         } catch (ParkingLotFullException exception) {
@@ -110,8 +111,8 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot_1);
         parkingLots.add(parkingLot_2);
         parkingBoy.addParkingLot(parkingLots);
-        Car car_1 = new Car();
-        Car car_2 = new Car();
+        Car car_1 = new Car("湘L-554466");
+        Car car_2 = new Car("湘L-778899");
         when(parkingLot_1.isFull()).thenReturn(false,true);
         when(parkingLot_2.isFull()).thenReturn(false);
         //when

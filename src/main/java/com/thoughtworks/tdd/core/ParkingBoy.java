@@ -1,5 +1,8 @@
-package com.thoughtworks.tdd;
+package com.thoughtworks.tdd.core;
 
+
+import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
+import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;

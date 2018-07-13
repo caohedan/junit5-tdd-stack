@@ -38,7 +38,7 @@ repositories {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-
+    compile 'com.google.inject:guice:4.1.0'
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     
     testCompile('org.junit.jupiter:junit-jupiter-api:5.0.0')
