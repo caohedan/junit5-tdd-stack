@@ -52,6 +52,10 @@ public class ParkingBoy {
            if(parkingLot.isFindReceipt(receipt))
            theParkingLot = parkingLot;
        }
+       if(theParkingLot == null)
+       {
+           throw new ReceiptIsNotExistException();
+       }
        System.out.print(theParkingLot);
         return theParkingLot.unPark(receipt);
     }
