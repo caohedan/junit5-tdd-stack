@@ -1,5 +1,8 @@
-package com.thoughtworks.tdd.requirement2;
+package com.thoughtworks.tdd.core;
 
+
+import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
+import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +21,19 @@ public class ParkingBoy {
         parkingLots.stream().forEach(parkingLot -> this.parkingLots.add(parkingLot));
     }
     public Receipt park(Car car) {
-        System.out.print(isParkingLotsFull());
         if (isParkingLotsFull()) {
             throw new ParkingLotFullException();
         }
         Receipt receipt = null;
         for (ParkingLot parkingLot : this.parkingLots) {
-            receipt = parkingLot.park(car);
-            if (receipt != null)
-                break;
+            try {
+                receipt = parkingLot.park(car);
+                if (receipt != null)
+                    break;
+            }
+          catch (ParkingLotFullException exception){
+                System.out.print("Force it into the full garage");
+          }
         }
 
         return receipt;
@@ -42,8 +49,17 @@ public class ParkingBoy {
     }
 
     public Car unPark(Receipt receipt) {
-        ParkingLot theParkingLot = receipt.getParkingLot();
-        theParkingLot.unPark(receipt);
-        return receipt.getCar();
+        ParkingLot theParkingLot = null;
+       for(ParkingLot parkingLot:parkingLots)
+       {
+           if(parkingLot.isFindReceipt(receipt))
+           theParkingLot = parkingLot;
+       }
+       if(theParkingLot == null)
+       {
+           throw new ReceiptIsNotExistException();
+       }
+       System.out.print(theParkingLot);
+        return theParkingLot.unPark(receipt);
     }
 }
