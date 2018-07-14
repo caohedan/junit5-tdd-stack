@@ -5,33 +5,33 @@ import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
 import java.util.HashMap;
 
 
-public class ParkingLot{
-    private int size ;
-    private HashMap<Receipt,Car> receiptsMap;
+public class ParkingLot {
+    private int size;
+    private HashMap<String, Car> receiptsMap;
+
     public ParkingLot(int size) {
-        this.size = size ;
-        receiptsMap = new HashMap<Receipt,Car>();
+        this.size = size;
+        receiptsMap = new HashMap<String, Car>();
     }
 
     public Receipt park(Car car) {
-        if(isFull())
-        {
+        if (isFull()) {
             throw new ParkingLotFullException();
         }
         Receipt receipt = new Receipt();
-        receiptsMap.put(receipt,car);
+        receiptsMap.put(receipt.getId(), car);
         return receipt;
     }
 
-    public Car unPark(Receipt receipt) {
-        Car car = receiptsMap.get(receipt);
-        receiptsMap.remove(receipt);
+    public Car unPark(String receiptId) {
+        Car car = receiptsMap.get(receiptId);
+        receiptsMap.remove(receiptId);
         return car;
     }
-    public boolean isFindReceipt(Receipt receipt)
-    {
-        if(this.receiptsMap.get(receipt) != null)
-            return  true;
+
+    public boolean isFindReceipt(String receiptId) {
+        if (this.receiptsMap.get(receiptId) != null)
+            return true;
         return false;
     }
 

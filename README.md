@@ -1,6 +1,3 @@
 #TDD Practice Code Base
-
-<<<<<<< HEAD
-主要内容再ParkingBoy分支
-=======
->>>>>>> 995ce9cbc9a9efc4252191a98f587d1db6b76302
+## 对ParkingBoy和InputSelectionValidator两个类进行了测试用例的编写
+## 测试用例覆盖率100%

@@ -11,10 +11,7 @@ public class Main {
 
         Injector injector = createInjector(new ParkingLotModule());
         ParkingSystemController gameController = injector.getInstance(ParkingSystemController.class);
-
         gameController.begin();
-        gameController.perform();
-        //test  1234
 
     }
 }

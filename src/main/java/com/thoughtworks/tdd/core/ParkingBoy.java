@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd.core;
 
 
+import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
 
@@ -14,26 +15,28 @@ public class ParkingBoy {
         this.parkingLots = new ArrayList<ParkingLot>();
     }
 
+    public ParkingBoy(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
+    }
+
     public void addParkingLot(ParkingLot parkingLot) {
         this.parkingLots.add(parkingLot);
     }
+
     public void addParkingLot(List<ParkingLot> parkingLots) {
         parkingLots.stream().forEach(parkingLot -> this.parkingLots.add(parkingLot));
     }
+
     public Receipt park(Car car) {
         if (isParkingLotsFull()) {
-            throw new ParkingLotFullException();
+            throw new ParkingBoyFullException();
         }
         Receipt receipt = null;
         for (ParkingLot parkingLot : this.parkingLots) {
             try {
                 receipt = parkingLot.park(car);
-                if (receipt != null)
-                    break;
+            } catch (ParkingLotFullException exception) {
             }
-          catch (ParkingLotFullException exception){
-                System.out.print("Force it into the full garage");
-          }
         }
 
         return receipt;
@@ -48,18 +51,20 @@ public class ParkingBoy {
         return true;
     }
 
-    public Car unPark(Receipt receipt) {
+    public Car unPark(String receiptId) {
         ParkingLot theParkingLot = null;
-       for(ParkingLot parkingLot:parkingLots)
-       {
-           if(parkingLot.isFindReceipt(receipt))
-           theParkingLot = parkingLot;
-       }
-       if(theParkingLot == null)
-       {
-           throw new ReceiptIsNotExistException();
-       }
-       System.out.print(theParkingLot);
-        return theParkingLot.unPark(receipt);
+        theParkingLot = getTheParkingLot(receiptId, theParkingLot);
+        if (theParkingLot == null) {
+            throw new ReceiptIsNotExistException();
+        }
+        return theParkingLot.unPark(receiptId);
+    }
+
+    private ParkingLot getTheParkingLot(String receiptId, ParkingLot theParkingLot) {
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.isFindReceipt(receiptId))
+                theParkingLot = parkingLot;
+        }
+        return theParkingLot;
     }
 }

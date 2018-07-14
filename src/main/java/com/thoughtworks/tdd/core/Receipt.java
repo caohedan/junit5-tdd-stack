@@ -10,4 +10,8 @@ public class Receipt {
         String randomUUIDString = uuid.toString();
         this.id = randomUUIDString;
     }
+
+    public String getId() {
+        return id;
+    }
 }
