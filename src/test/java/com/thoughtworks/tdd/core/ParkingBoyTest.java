@@ -1,9 +1,6 @@
-package com.thoughtworks.tdd;
+package com.thoughtworks.tdd.core;
 
-import com.thoughtworks.tdd.core.Car;
-import com.thoughtworks.tdd.core.ParkingBoy;
-import com.thoughtworks.tdd.core.ParkingLot;
-import com.thoughtworks.tdd.core.Receipt;
+
 import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ParkingLotFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;

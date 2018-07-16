@@ -1,6 +1,7 @@
-package com.thoughtworks.tdd.core;
+package com.thoughtworks.tdd.shell;
 
-import com.thoughtworks.tdd.controllers.ParkingSystemController;
+import com.thoughtworks.tdd.shell.controllers.ParkingSystemController;
+import com.thoughtworks.tdd.shell.io.Request;
 
 public class Router {
     private ParkingSystemController controller;

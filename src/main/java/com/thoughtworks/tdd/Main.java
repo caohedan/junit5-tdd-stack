@@ -1,7 +1,10 @@
 package com.thoughtworks.tdd;
 
-import com.thoughtworks.tdd.controllers.ParkingSystemController;
+import com.thoughtworks.tdd.shell.Router;
+import com.thoughtworks.tdd.shell.controllers.ParkingSystemController;
 import com.thoughtworks.tdd.core.*;
+import com.thoughtworks.tdd.shell.io.Request;
+import com.thoughtworks.tdd.shell.io.Response;
 
 public class Main {
 

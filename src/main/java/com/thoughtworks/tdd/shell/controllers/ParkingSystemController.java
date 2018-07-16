@@ -1,8 +1,9 @@
-package com.thoughtworks.tdd.controllers;
+package com.thoughtworks.tdd.shell.controllers;
 
 import com.thoughtworks.tdd.core.*;
 import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
+import com.thoughtworks.tdd.shell.io.Response;
 
 import java.util.List;
 

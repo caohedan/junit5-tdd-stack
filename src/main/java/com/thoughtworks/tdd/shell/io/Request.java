@@ -1,4 +1,4 @@
-package com.thoughtworks.tdd.core;
+package com.thoughtworks.tdd.shell.io;
 
 public class Request {
     private String command;
