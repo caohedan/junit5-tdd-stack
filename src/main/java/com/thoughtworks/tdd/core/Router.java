@@ -17,6 +17,7 @@ public class Router {
     }
 
     public void handleRequest(Request request) {
+        System.out.println("####"+currentPage);
         switch (currentPage) {
             case "main":
                 handleMainPage(request.getCommand());
@@ -25,15 +26,15 @@ public class Router {
                 handleParkPage(request.getCommand());
                 break;
             case "unPark":
-                handleUnParkRequest(request.getCommand());
+                handleUnPark(request.getCommand());
                 break;
             default:
-                handleInvalidPage(request.getCommand());
+                handleInvalidPage();
         }
 
     }
 
-    private void handleInvalidPage(String command) {
+    private void handleInvalidPage() {
         controller.dealInvalidPage();
         currentPage = "main";
     }
@@ -55,12 +56,11 @@ public class Router {
                 break;
             default:
                 controller.dealInvalidPage();
-                currentPage = "invalid";
         }
 
     }
 
-    private void handleUnParkRequest(String command) {
+    private void handleUnPark(String command) {
         controller.unPark(command);
         currentPage = "main";
     }
