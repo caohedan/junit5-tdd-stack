@@ -15,7 +15,7 @@ public class ParkingSystemView {
 
     }
 
-    public void dealIllegalInput() {
+    public void showIllegalInput() {
         System.out.println("非法指令，请查证后再输");
     }
 
@@ -27,7 +27,7 @@ public class ParkingSystemView {
             System.out.println("车已停满，请晚点再来");
     }
 
-    public void dealParkingLotIsNotFull() {
+    public void showParkingLotIsNotFull() {
         System.out.println("请输入车牌号:");
     }
 

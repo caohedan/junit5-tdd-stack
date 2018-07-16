@@ -1,96 +1,71 @@
 package com.thoughtworks.tdd.controllers;
 
-import com.google.inject.Inject;
 import com.thoughtworks.tdd.core.Car;
 import com.thoughtworks.tdd.core.ParkingBoy;
-import com.thoughtworks.tdd.core.ParkingLot;
 import com.thoughtworks.tdd.core.Receipt;
+import com.thoughtworks.tdd.core.Response;
+import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
-import com.thoughtworks.tdd.validator.InputSelectionValidator;
 import com.thoughtworks.tdd.views.ParkingSystemView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParkingSystemController {
     private final ParkingSystemView parkingSystemView;
-    private BufferedReader bufferedReader;
     private ParkingBoy parkingBoy;
+    private Response response;
 
-    {
-        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    }
-
-    @Inject
-    public ParkingSystemController(ParkingSystemView parkingSystemView) {
+    public ParkingSystemController(ParkingSystemView parkingSystemView, ParkingBoy parkingBoy, Response response) {
         this.parkingSystemView = parkingSystemView;
-        List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
-        ParkingLot parkingLot_1 = new ParkingLot(0);
-        ParkingLot parkingLot_2 = new ParkingLot(1);
-        parkingLots.add(parkingLot_1);
-        parkingLots.add(parkingLot_2);
-        parkingBoy = new ParkingBoy(parkingLots);
-    }
-
-    public void begin() throws IOException {
-        parkingSystemView.showBegin();
-        inputSelection();
+        this.parkingBoy = parkingBoy;
+        this.response = response;
 
     }
 
-    public void perform(String num) throws IOException {
-        if (num.equals("1")) {
-            parkingSystemView.showStop();
-            if (parkingBoy.isParkingLotsFull()) {
-                parkingSystemView.showParkingLotIsFull();
-                begin();
-            } else {
-                parkingSystemView.dealParkingLotIsNotFull();
-                Receipt receipt = parkingBoy.park(new Car(inputLicensNumber()));
-                parkingSystemView.showReceipt(receipt);
-                begin();
 
-            }
-
-        } else {
-            parkingSystemView.showUnpark();
-            try {
-                Car car = parkingBoy.unPark(inputReceipt());
-                parkingSystemView.showTheCar(car);
-            } catch (ReceiptIsNotExistException exception) {
-                parkingSystemView.showWrongReceipt();
-            } finally {
-                begin();
-            }
-
+    public void park(String command) {
+        try {
+            Receipt receipt = parkingBoy.park(new Car(command));
+            response.send("停车成功，您的小票是：\n" + receipt.getId());
+        } catch (ParkingBoyFullException exception) {
+            response.send("非法操作");
         }
-
+        mainPage();
     }
 
-    private String inputReceipt() throws IOException {
-        String input = bufferedReader.readLine();
-        return input;
-    }
 
-    private String inputLicensNumber() throws IOException {
-        String input = bufferedReader.readLine();
-        return input;
-
-    }
-
-    public void inputSelection() throws IOException {
-        String input = bufferedReader.readLine();
-        if (new InputSelectionValidator().validate(input)) {
-
-            perform(input);
-        } else {
-            parkingSystemView.dealIllegalInput();
-            inputSelection();
-
+    public void unPark(String command) {
+        try {
+            Car car = parkingBoy.unPark(command);
+            response.send("车已取出，您的车牌号是:" + car.getLisenceNum());
+        } catch (ReceiptIsNotExistException exception) {
+            response.send("非法小票，无法取出车，请查证后再输");
         }
+        mainPage();
+
     }
 
+    public void mainPage() {
+        response.send("1. 停车\n2. 取车\n请输入您要进行的操作：");
+    }
+
+    public void dealInvalidPage() {
+        response.send("非法指令，请查证后再输.");
+        mainPage();
+    }
+
+    public String parkPage() {
+        String command;
+        if (parkingBoy.isParkingLotsFull()) {
+            response.send("车已停满，请晚点再来");
+            mainPage();
+            command = "main";
+        } else {
+            response.send("请输入车牌号:");
+            command = "park";
+        }
+        return command;
+    }
+
+    public void unParkPage() {
+        response.send("欢迎来到取车界面\n请输入小票编号：");
+    }
 }

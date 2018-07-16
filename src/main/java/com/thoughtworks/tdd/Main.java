@@ -1,17 +1,31 @@
 package com.thoughtworks.tdd;
 
-import com.google.inject.Injector;
 import com.thoughtworks.tdd.controllers.ParkingSystemController;
+import com.thoughtworks.tdd.core.*;
+import com.thoughtworks.tdd.views.ParkingSystemView;
 
-import static com.google.inject.Guice.createInjector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Injector injector = createInjector(new ParkingLotModule());
-        ParkingSystemController gameController = injector.getInstance(ParkingSystemController.class);
-        gameController.begin();
+        List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+        parkingLots.add(new ParkingLot(0));
+        parkingLots.add(new ParkingLot(1));
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Response response = new Response();
+        Request request = new Request();
+        ParkingSystemController controller = new ParkingSystemController(new ParkingSystemView(), parkingBoy, response);
+        Input cli = new Input();
+        String currentPage = "main";
+        Router router = new Router(currentPage, controller);
+        while (true) {
+            String command = cli.input();
+            request.setCommand(command);
+            router.handleRequest(request);
+        }
 
     }
 }
