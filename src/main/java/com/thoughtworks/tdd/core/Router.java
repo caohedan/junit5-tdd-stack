@@ -47,9 +47,7 @@ public class Router {
     private void handleMainPage(String command) {
         switch (command) {
             case "1":
-
                 currentPage = controller.parkPage();
-                ;
                 break;
             case "2":
                 controller.unParkPage();
