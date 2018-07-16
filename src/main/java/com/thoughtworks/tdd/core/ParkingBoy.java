@@ -50,6 +50,7 @@ public class ParkingBoy {
                 receipt = parkingLot.park(car);
                 break;
             } catch (ParkingLotFullException exception) {
+
             }
         }
 

@@ -59,7 +59,8 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot_2);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         when(parkingLot_1.isFull()).thenReturn(true);
-        when(parkingLot_2.isFull()).thenReturn(false);
+        when(parkingLot_1.park(car_1)).thenThrow(new ParkingLotFullException());
+        when(parkingLot_2.isFull()).thenReturn(false,true);
         when(parkingLot_2.park(car_1)).thenReturn(new Receipt());
         //when
         parkingBoy.park(car_1);
