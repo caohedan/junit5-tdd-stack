@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         List<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
-        parkingLots.add(new ParkingLot(0));
-        parkingLots.add(new ParkingLot(1));
+        parkingLots.add(new ParkingLot("西南停车场",3));
+        parkingLots.add(new ParkingLot("西南停车场",4));
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Response response = new Response();
         Request request = new Request();

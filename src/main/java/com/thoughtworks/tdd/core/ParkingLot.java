@@ -7,10 +7,20 @@ import java.util.HashMap;
 
 public class ParkingLot {
     private int size;
+    private String name;
     private HashMap<String, Car> receiptsMap;
 
-    public ParkingLot(int size) {
+    public String getName() {
+        return name;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public ParkingLot(String name, int size) {
         this.size = size;
+        this.name = name;
         receiptsMap = new HashMap<String, Car>();
     }
 
@@ -33,6 +43,10 @@ public class ParkingLot {
         if (this.receiptsMap.get(receiptId) != null)
             return true;
         return false;
+    }
+    public int getParkNum()
+    {
+        return receiptsMap.size();
     }
 
     public boolean isFull() {

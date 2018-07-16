@@ -1,7 +1,7 @@
 package com.thoughtworks.tdd.core;
 
 public class Request {
-    String command;
+    private String command;
 
     public String getCommand() {
         return command;

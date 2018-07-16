@@ -1,12 +1,12 @@
 package com.thoughtworks.tdd.controllers;
 
-import com.thoughtworks.tdd.core.Car;
-import com.thoughtworks.tdd.core.ParkingBoy;
-import com.thoughtworks.tdd.core.Receipt;
-import com.thoughtworks.tdd.core.Response;
+import com.thoughtworks.tdd.core.*;
+import com.thoughtworks.tdd.core.exception.FormatWrongException;
 import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
 import com.thoughtworks.tdd.views.ParkingSystemView;
+
+import java.util.List;
 
 public class ParkingSystemController {
     private final ParkingSystemView parkingSystemView;
@@ -44,7 +44,7 @@ public class ParkingSystemController {
     }
 
     public void mainPage() {
-        response.send("1. 停车\n2. 取车\n请输入您要进行的操作：");
+        response.send("1.停车服务\n" + "2.停车场管理\n" + "请输入您要进入的页面：");
     }
 
     public void dealInvalidPage() {
@@ -67,5 +67,57 @@ public class ParkingSystemController {
 
     public void unParkPage() {
         response.send("欢迎来到取车界面\n请输入小票编号：");
+    }
+
+    public String parkAndUnParkPage() {
+        response.send("1. 停车\n2. 取车\n请输入您要进行的操作：");
+        return "park_and_unpark";
+    }
+
+    public String check_and_delete_parkingLot() {
+        response.send("1.查看停车场详情\n" + "2.添加停车场\n" + "3.删除停车场" + "请输入您要进入的页面：");
+        return "check_and_delete_parkingLot";
+    }
+
+    public String checkPakingLotPage() {
+        String strInfo = "进入停车场详情：\n" + "|停车场ID|名称|车位|已停车辆|剩余车位|\n" + "======================================\n";
+        List<ParkingLot> list = parkingBoy.getParkingLots();
+        int id = 1;
+        int total = 0;
+        int parkNum = 0;
+        for (ParkingLot p : list) {
+            total += p.getSize();
+            parkNum += p.getParkNum();
+            strInfo += "|" + id + p.getName() + "|" + p.getSize() + "(个)|" + p.getParkNum() + "(辆)|" + (p.getSize() - p.getParkNum()) + "(个)|\n";
+        }
+        strInfo += "\n总车位：" + total + "(个)\n" + "停车总量：" + parkNum + "（辆）\n" + "总剩余车位：" + (total - parkNum) + "（个）";
+        response.send(strInfo);
+        mainPage();
+        return "main";
+    }
+
+    public void checkParkingLot(String command) {
+
+    }
+
+    public String addParkingLotPage() {
+        response.send("请输入你套添加的停车场信息（格式为：名称，车位）：");
+        return "add_parking_lot";
+    }
+
+    public void addParkingLot(String command) {
+      try{
+          String[] strList = command.split(",");
+          if(strList.length>2)
+          {
+              throw  new FormatWrongException();
+          }
+          String name = strList[0];
+          int size = Integer.parseInt(strList[1]);
+          parkingBoy.addParkingLot(new ParkingLot(name,size));
+
+      }catch (FormatWrongException exception){
+          response.send("输入格式不正确");
+      }
     }
 }

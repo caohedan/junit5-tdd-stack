@@ -17,10 +17,15 @@ public class Router {
     }
 
     public void handleRequest(Request request) {
-        System.out.println("####"+currentPage);
         switch (currentPage) {
             case "main":
                 handleMainPage(request.getCommand());
+                break;
+            case"park_and_unpark":
+                handlePark_and_unparkPage(request.getCommand());
+                break;
+            case"check_and_delete_parkingLot":
+                handlePark_and_check_and_delete_parkingLotPage(request.getCommand());
                 break;
             case "park":
                 handleParkPage(request.getCommand());
@@ -28,8 +33,44 @@ public class Router {
             case "unPark":
                 handleUnPark(request.getCommand());
                 break;
+            case"check_parking_lot":
+                handleCheckParkingLot();
+                break;
+            case"add_parking_lot":
+                handleAddParkingLot(request.getCommand());
+                break;
             default:
                 handleInvalidPage();
+        }
+
+    }
+
+
+
+
+    private void handlePark_and_check_and_delete_parkingLotPage(String command) {
+        switch (command) {
+            case "1":
+                currentPage = controller.checkPakingLotPage();
+                break;
+            case "2":
+                currentPage =  controller.addParkingLotPage();
+            default:
+                controller.dealInvalidPage();
+        }
+    }
+
+    private void handlePark_and_unparkPage(String command) {
+        switch (command) {
+            case "1":
+                currentPage = controller.parkPage();
+                break;
+            case "2":
+                controller.unParkPage();
+                currentPage = "unPark";
+                break;
+            default:
+                controller.dealInvalidPage();
         }
 
     }
@@ -44,15 +85,22 @@ public class Router {
         currentPage = "main";
 
     }
+    private void handleCheckParkingLot() {
+        controller.checkPakingLotPage();
+        currentPage = "main";
+    }
+    private void handleAddParkingLot(String command) {
+        controller.addParkingLot(command);
+        currentPage = "main";
 
+    }
     private void handleMainPage(String command) {
         switch (command) {
             case "1":
-                currentPage = controller.parkPage();
+                currentPage = controller.parkAndUnParkPage();
                 break;
             case "2":
-                controller.unParkPage();
-                currentPage = "unPark";
+                currentPage = controller.check_and_delete_parkingLot();
                 break;
             default:
                 controller.dealInvalidPage();
