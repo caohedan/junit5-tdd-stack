@@ -24,6 +24,11 @@ public class ParkingBoy {
         return parkingLots;
     }
 
+//    public void addParkingLot(ParkingLot parkingLot) {
+//        this.parkingLots.add(new ParkingLot(convertNumToString(),parkingLot.getName(),parkingLot.getSize()));
+//
+//    }
+
     public void addParkingLot(ParkingLot parkingLot) {
         this.parkingLots.add(parkingLot);
     }

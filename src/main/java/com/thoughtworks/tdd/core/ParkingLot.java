@@ -11,6 +11,11 @@ public class ParkingLot {
     private String id;
     private HashMap<String, Car> receiptsMap;
 
+    public ParkingLot(String name, int size) {
+        this.name = name;
+        this.size = size;
+    }
+
     public String getName() {
         return name;
     }

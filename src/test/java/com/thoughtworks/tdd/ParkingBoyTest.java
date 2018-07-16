@@ -38,7 +38,7 @@ public class ParkingBoyTest {
         //given
         ParkingBoy parkingBoy = new ParkingBoy();
         parkingBoy.addParkingLot(parkingLot_1);
-        when(parkingLot_1.isFull()).thenReturn(false, true);
+        when(parkingLot_1.isFull()).thenReturn(false);
         //when
         try {
             parkingBoy.park(car_1);
@@ -60,6 +60,7 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         when(parkingLot_1.isFull()).thenReturn(true);
         when(parkingLot_2.isFull()).thenReturn(false);
+        when(parkingLot_2.park(car_1)).thenReturn(new Receipt());
         //when
         parkingBoy.park(car_1);
         //then
@@ -111,16 +112,17 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_park_successfully_when_given_right_receipt() {
+    public void should_unpark_successfully_when_given_right_receipt() {
         //given
         ParkingBoy parkingBoy = new ParkingBoy();
         parkingBoy.addParkingLot(parkingLot_1);
-        when(parkingLot_1.park(car_1)).thenReturn(new Receipt());
-        Receipt receipt = parkingBoy.park(car_1);
-        when(parkingLot_1.isFull()).thenReturn(false);
+        Receipt receipt = mock(Receipt.class);
+        when(parkingLot_1.park(car_1)).thenReturn(receipt);
+        parkingBoy.park(car_1);
         when(parkingLot_1.isFindReceipt(receipt.getId())).thenReturn(true);
         //when
         parkingBoy.unPark(receipt.getId());
+
         Mockito.verify(parkingLot_1).unPark(receipt.getId());
 
 
@@ -160,9 +162,11 @@ public class ParkingBoyTest {
         when(parkingLot_1.isFull()).thenReturn(false, true);
         when(parkingLot_2.isFull()).thenReturn(false);
         //when
+        when(parkingLot_1.park(car_1)).thenReturn(new Receipt());
+        when(parkingLot_1.park(car_2)).thenThrow(new ParkingLotFullException());
         parkingBoy.park(car_1);
+        when(parkingLot_2.park(car_2)).thenReturn(new Receipt());
         parkingBoy.park(car_2);
-
         //then
         InOrder inOrder = inOrder(parkingLot_1, parkingLot_2);
         inOrder.verify(parkingLot_1).park(car_1);
