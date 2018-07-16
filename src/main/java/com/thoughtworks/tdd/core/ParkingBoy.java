@@ -10,9 +10,10 @@ import java.util.List;
 
 public class ParkingBoy {
     private List<ParkingLot> parkingLots;
-
+    private int parkingLotNum ;
     public ParkingBoy() {
         this.parkingLots = new ArrayList<ParkingLot>();
+        this.parkingLotNum = 0;
     }
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
@@ -30,6 +31,9 @@ public class ParkingBoy {
     public void addParkingLot(List<ParkingLot> parkingLots) {
         parkingLots.stream().forEach(parkingLot -> this.parkingLots.add(parkingLot));
     }
+    public void addParkingLot(String name, int size) {
+        this.parkingLots.add(new ParkingLot(convertNumToString(),name,size));
+    }
 
     public Receipt park(Car car) {
         if (isParkingLotsFull()) {
@@ -39,6 +43,7 @@ public class ParkingBoy {
         for (ParkingLot parkingLot : this.parkingLots) {
             try {
                 receipt = parkingLot.park(car);
+                break;
             } catch (ParkingLotFullException exception) {
             }
         }
@@ -70,5 +75,22 @@ public class ParkingBoy {
                 theParkingLot = parkingLot;
         }
         return theParkingLot;
+    }
+    private String convertNumToString(){
+        ++this.parkingLotNum;
+        return String.format("%03d", this.parkingLotNum);
+    }
+
+
+    public ParkingLot findParingLot(String command) {
+        for(ParkingLot p:this.parkingLots){
+            if(p.getId().equals(command))
+                return p;
+        }
+        return  null;
+    }
+
+    public void removeParkingLot(ParkingLot parkingLot) {
+        this.parkingLots.remove(parkingLot);
     }
 }

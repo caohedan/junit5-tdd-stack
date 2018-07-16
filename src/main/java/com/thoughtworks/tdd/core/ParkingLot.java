@@ -8,17 +8,23 @@ import java.util.HashMap;
 public class ParkingLot {
     private int size;
     private String name;
+    private String id;
     private HashMap<String, Car> receiptsMap;
 
     public String getName() {
         return name;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public int getSize() {
         return size;
     }
 
-    public ParkingLot(String name, int size) {
+    public ParkingLot(String id,String name, int size) {
+        this.id = id;
         this.size = size;
         this.name = name;
         receiptsMap = new HashMap<String, Car>();

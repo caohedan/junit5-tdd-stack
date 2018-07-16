@@ -39,6 +39,9 @@ public class Router {
             case"add_parking_lot":
                 handleAddParkingLot(request.getCommand());
                 break;
+            case"delete_parking_lot":
+                handleDeleteParkingLot(request.getCommand());
+                break;
             default:
                 handleInvalidPage();
         }
@@ -54,7 +57,11 @@ public class Router {
                 currentPage = controller.checkPakingLotPage();
                 break;
             case "2":
-                currentPage =  controller.addParkingLotPage();
+                currentPage = controller.addParkingLotPage();
+                break;
+            case"3":
+                currentPage = controller.deleteParkingLotPage();
+                break;
             default:
                 controller.dealInvalidPage();
         }
@@ -93,6 +100,10 @@ public class Router {
         controller.addParkingLot(command);
         currentPage = "main";
 
+    }
+    private void handleDeleteParkingLot(String command) {
+        controller.delteParkingLot(command);
+        currentPage = "main";
     }
     private void handleMainPage(String command) {
         switch (command) {

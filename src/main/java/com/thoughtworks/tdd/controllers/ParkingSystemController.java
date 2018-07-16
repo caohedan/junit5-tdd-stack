@@ -1,20 +1,16 @@
 package com.thoughtworks.tdd.controllers;
 
 import com.thoughtworks.tdd.core.*;
-import com.thoughtworks.tdd.core.exception.FormatWrongException;
 import com.thoughtworks.tdd.core.exception.ParkingBoyFullException;
 import com.thoughtworks.tdd.core.exception.ReceiptIsNotExistException;
-import com.thoughtworks.tdd.views.ParkingSystemView;
 
 import java.util.List;
 
 public class ParkingSystemController {
-    private final ParkingSystemView parkingSystemView;
     private ParkingBoy parkingBoy;
     private Response response;
 
-    public ParkingSystemController(ParkingSystemView parkingSystemView, ParkingBoy parkingBoy, Response response) {
-        this.parkingSystemView = parkingSystemView;
+    public ParkingSystemController(ParkingBoy parkingBoy, Response response) {
         this.parkingBoy = parkingBoy;
         this.response = response;
 
@@ -82,13 +78,12 @@ public class ParkingSystemController {
     public String checkPakingLotPage() {
         String strInfo = "进入停车场详情：\n" + "|停车场ID|名称|车位|已停车辆|剩余车位|\n" + "======================================\n";
         List<ParkingLot> list = parkingBoy.getParkingLots();
-        int id = 1;
         int total = 0;
         int parkNum = 0;
         for (ParkingLot p : list) {
             total += p.getSize();
             parkNum += p.getParkNum();
-            strInfo += "|" + id + p.getName() + "|" + p.getSize() + "(个)|" + p.getParkNum() + "(辆)|" + (p.getSize() - p.getParkNum()) + "(个)|\n";
+            strInfo += "|" + p.getId() + "|" + p.getName() + "|" + p.getSize() + "(个)|" + p.getParkNum() + "(辆)|" + (p.getSize() - p.getParkNum()) + "(个)|\n";
         }
         strInfo += "\n总车位：" + total + "(个)\n" + "停车总量：" + parkNum + "（辆）\n" + "总剩余车位：" + (total - parkNum) + "（个）";
         response.send(strInfo);
@@ -96,9 +91,6 @@ public class ParkingSystemController {
         return "main";
     }
 
-    public void checkParkingLot(String command) {
-
-    }
 
     public String addParkingLotPage() {
         response.send("请输入你套添加的停车场信息（格式为：名称，车位）：");
@@ -106,18 +98,36 @@ public class ParkingSystemController {
     }
 
     public void addParkingLot(String command) {
-      try{
-          String[] strList = command.split(",");
-          if(strList.length>2)
-          {
-              throw  new FormatWrongException();
-          }
-          String name = strList[0];
-          int size = Integer.parseInt(strList[1]);
-          parkingBoy.addParkingLot(new ParkingLot(name,size));
+        try {
+            String[] strList = command.split(",");
+            String name = strList[0];
+            int size = Integer.parseInt(strList[1]);
+            parkingBoy.addParkingLot(name, size);
+            response.send("停车场添加成功！");
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            response.send("输入格式不正确");
+        } finally {
+            mainPage();
+        }
+    }
 
-      }catch (FormatWrongException exception){
-          response.send("输入格式不正确");
-      }
+    public String deleteParkingLotPage() {
+        response.send("请输入需要删除的被管理停车场ID:");
+        return "delete_parking_lot";
+    }
+
+    public void delteParkingLot(String command) {
+        if (parkingBoy.findParingLot(command) == null) {
+            response.send("此停车场不存在！");
+        } else {
+            ParkingLot parkingLot = parkingBoy.findParingLot(command);
+            if (parkingLot.getParkNum()> 0) {
+                response.send("此停车场中，依然停有汽车，无法删除！");
+            } else {
+                parkingBoy.removeParkingLot(parkingLot);
+                response.send("删除成功");
+            }
+        }
+        mainPage();
     }
 }
